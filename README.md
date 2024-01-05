@@ -1,3 +1,3 @@
 # QR Code Generator
 
-A basic QR Code generator. This is also my first React project.
+Visit [https://qrcode-generator-34645d.netlify.app](https://qrcode-generator-34645d.netlify.app) to try the QR Code Generator.
