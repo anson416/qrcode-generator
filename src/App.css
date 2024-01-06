@@ -11,3 +11,17 @@ textarea {
   box-sizing: border-box;
   width: 100%;
 }
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.dropdown-desc {
+  margin-right: 5px;
+}

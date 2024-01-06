@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import Switch from "./components/Switch";
+import ColorPicker from "./components/ColorPicker";
 import "./App.css";
 
 export default function App() {
@@ -10,16 +12,14 @@ export default function App() {
   const defaultLevel = "H";
   const defaultIncludeMargin = false;
 
+  const errorCorrectionLevels = ["Low", "Medium", "Quartile", "High"];
+
   const [text, setText] = useState(defaultText);
   const [size, setSize] = useState(defaultSize);
   const [bgColor, setBgColor] = useState(defaultBgColor);
   const [fgColor, setFgColor] = useState(defaultFgColor);
   const [level, setLevel] = useState(defaultLevel);
   const [includeMargin, setIncludeMargin] = useState(defaultIncludeMargin);
-
-  const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLevel(event.target.value);
-  };
 
   const handleReset = () => {
     setText(defaultText);
@@ -29,6 +29,19 @@ export default function App() {
     setLevel(defaultLevel);
     setIncludeMargin(defaultIncludeMargin);
   };
+
+  // const downloadQR = () => {
+  //   const canvas = document.getElementById("123456");
+  //   const pngUrl = canvas
+  //     .toDataURL("image/png")
+  //     .replace("image/png", "image/octet-stream");
+  //   let downloadLink = document.createElement("a");
+  //   downloadLink.href = pngUrl;
+  //   downloadLink.download = "123456.png";
+  //   document.body.appendChild(downloadLink);
+  //   downloadLink.click();
+  //   document.body.removeChild(downloadLink);
+  // };
 
   return (
     <>
@@ -42,7 +55,6 @@ export default function App() {
           level={level}
           includeMargin={includeMargin}
         />
-        {/* <input type="color" /> */}
       </div>
       <div>
         <textarea
@@ -55,67 +67,34 @@ export default function App() {
         />
       </div>
       <div>
-        <label>Background color:</label>
-        <input
-          type="color"
-          value={bgColor}
-          onChange={(event) => setBgColor(event.target.value)}
+        <ColorPicker
+          color={bgColor}
+          onChange={setBgColor}
+          desc="Background color:"
         />
-        <label>Foreground color:</label>
-        <input
-          type="color"
-          value={fgColor}
-          onChange={(event) => setFgColor(event.target.value)}
+        <ColorPicker
+          color={fgColor}
+          onChange={setFgColor}
+          desc="Foreground color:"
         />
       </div>
-      <div>
-        <label>Error correction level:</label>
-        <label>
-          <input
-            type="radio"
-            value="L"
-            checked={level === "L"}
-            onChange={handleLevelChange}
-          />
-          L
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="M"
-            checked={level === "M"}
-            onChange={handleLevelChange}
-          />
-          M
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="Q"
-            checked={level === "Q"}
-            onChange={handleLevelChange}
-          />
-          Q
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="H"
-            checked={level === "H"}
-            onChange={handleLevelChange}
-          />
-          H
-        </label>
+      <div className="dropdown-container">
+        <label className="dropdown-desc">Error correction level:</label>
+        <select
+          value={level}
+          onChange={(event) => setLevel(event.target.value)}
+        >
+          {errorCorrectionLevels.map((item) => (
+            <option value={item[0]}>{item}</option>
+          ))}
+        </select>
       </div>
       <div>
-        <label>
-          Include margin?
-          <input
-            type="checkbox"
-            checked={includeMargin}
-            onChange={() => setIncludeMargin(!includeMargin)}
-          />
-        </label>
+        <Switch
+          isChecked={includeMargin}
+          onToggle={setIncludeMargin}
+          desc="Margin"
+        />
       </div>
       <div>
         <button onClick={handleReset}>Reset</button>
