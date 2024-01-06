@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import Switch from "./components/Switch";
 import ColorPicker from "./components/ColorPicker";
+import useLocalStorage from "use-local-storage";
 import "./App.css";
 
 export default function App() {
@@ -14,12 +15,18 @@ export default function App() {
 
   const errorCorrectionLevels = ["Low", "Medium", "Quartile", "High"];
 
+  const [isDark, setIsDark] = useLocalStorage(
+    "isDark",
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
+
   const [text, setText] = useState(defaultText);
   const [size, setSize] = useState(defaultSize);
   const [bgColor, setBgColor] = useState(defaultBgColor);
   const [fgColor, setFgColor] = useState(defaultFgColor);
   const [level, setLevel] = useState(defaultLevel);
   const [includeMargin, setIncludeMargin] = useState(defaultIncludeMargin);
+
   const qrCodeRef = useRef<HTMLDivElement>(null);
 
   const handleReset = () => {
@@ -46,60 +53,65 @@ export default function App() {
 
   return (
     <>
-      <h1>QR Code Generator</h1>
-      <div ref={qrCodeRef}>
-        <QRCodeCanvas
-          value={text}
-          size={size}
-          bgColor={bgColor}
-          fgColor={fgColor}
-          level={level}
-          includeMargin={includeMargin}
-        />
-      </div>
-      <div>
-        <textarea
-          autoFocus
-          value={text}
-          placeholder="Type something here"
-          maxLength={1000}
-          rows={10}
-          onChange={(event) => setText(event.target.value)}
-        />
-      </div>
-      <div>
-        <ColorPicker
-          color={bgColor}
-          onChange={setBgColor}
-          desc="Background color:"
-        />
-        <ColorPicker
-          color={fgColor}
-          onChange={setFgColor}
-          desc="Foreground color:"
-        />
-      </div>
-      <div>
-        <div className="dropdown-container">
-          <label className="dropdown-desc">Error correction level:</label>
-          <select
-            value={level}
-            onChange={(event) => setLevel(event.target.value)}
-          >
-            {errorCorrectionLevels.map((item) => (
-              <option value={item[0]}>{item}</option>
-            ))}
-          </select>
+      <div className="app" data-theme={isDark ? "dark" : "light"}>
+        <div>
+          <Switch isChecked={isDark} setAction={setIsDark} />
         </div>
-        <Switch
-          isChecked={includeMargin}
-          onToggle={setIncludeMargin}
-          desc="Margin"
-        />
-      </div>
-      <div>
-        <button onClick={handleDownload}>Download</button>
-        <button onClick={handleReset}>Reset</button>
+        <h1 className="title">QR Code Generator</h1>
+        <div ref={qrCodeRef}>
+          <QRCodeCanvas
+            value={text}
+            size={size}
+            bgColor={bgColor}
+            fgColor={fgColor}
+            level={level}
+            includeMargin={includeMargin}
+          />
+        </div>
+        <div>
+          <textarea
+            autoFocus
+            value={text}
+            placeholder="Type something here"
+            maxLength={1000}
+            rows={5}
+            onChange={(event) => setText(event.target.value)}
+          />
+        </div>
+        <div>
+          <ColorPicker
+            color={bgColor}
+            onChange={setBgColor}
+            desc="Background color:"
+          />
+          <ColorPicker
+            color={fgColor}
+            onChange={setFgColor}
+            desc="Foreground color:"
+          />
+        </div>
+        <div>
+          <div className="dropdown-container">
+            <label className="dropdown-desc">Error correction level:</label>
+            <select
+              value={level}
+              onChange={(event) => setLevel(event.target.value)}
+            >
+              {errorCorrectionLevels.map((item) => (
+                <option value={item[0]}>{item}</option>
+              ))}
+            </select>
+          </div>
+          <Switch
+            isChecked={includeMargin}
+            setAction={setIncludeMargin}
+            desc="Margin"
+          />
+        </div>
+        <div>
+          <button onClick={handleDownload}>Download</button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
       </div>
     </>
   );
