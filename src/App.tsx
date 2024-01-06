@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
+import { useState, useRef } from "react";
+import { QRCodeCanvas } from "qrcode.react";
 import Switch from "./components/Switch";
 import ColorPicker from "./components/ColorPicker";
 import "./App.css";
@@ -20,6 +20,7 @@ export default function App() {
   const [fgColor, setFgColor] = useState(defaultFgColor);
   const [level, setLevel] = useState(defaultLevel);
   const [includeMargin, setIncludeMargin] = useState(defaultIncludeMargin);
+  const qrCodeRef = useRef<HTMLDivElement>(null);
 
   const handleReset = () => {
     setText(defaultText);
@@ -30,24 +31,24 @@ export default function App() {
     setIncludeMargin(defaultIncludeMargin);
   };
 
-  // const downloadQR = () => {
-  //   const canvas = document.getElementById("123456");
-  //   const pngUrl = canvas
-  //     .toDataURL("image/png")
-  //     .replace("image/png", "image/octet-stream");
-  //   let downloadLink = document.createElement("a");
-  //   downloadLink.href = pngUrl;
-  //   downloadLink.download = "123456.png";
-  //   document.body.appendChild(downloadLink);
-  //   downloadLink.click();
-  //   document.body.removeChild(downloadLink);
-  // };
+  const handleDownload = () => {
+    if (qrCodeRef.current) {
+      const canvasElement = qrCodeRef.current.querySelector("canvas");
+      if (canvasElement) {
+        const url = canvasElement.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "qrcode.png";
+        link.click();
+      }
+    }
+  };
 
   return (
     <>
       <h1>QR Code Generator</h1>
-      <div>
-        <QRCodeSVG
+      <div ref={qrCodeRef}>
+        <QRCodeCanvas
           value={text}
           size={size}
           bgColor={bgColor}
@@ -78,18 +79,18 @@ export default function App() {
           desc="Foreground color:"
         />
       </div>
-      <div className="dropdown-container">
-        <label className="dropdown-desc">Error correction level:</label>
-        <select
-          value={level}
-          onChange={(event) => setLevel(event.target.value)}
-        >
-          {errorCorrectionLevels.map((item) => (
-            <option value={item[0]}>{item}</option>
-          ))}
-        </select>
-      </div>
       <div>
+        <div className="dropdown-container">
+          <label className="dropdown-desc">Error correction level:</label>
+          <select
+            value={level}
+            onChange={(event) => setLevel(event.target.value)}
+          >
+            {errorCorrectionLevels.map((item) => (
+              <option value={item[0]}>{item}</option>
+            ))}
+          </select>
+        </div>
         <Switch
           isChecked={includeMargin}
           onToggle={setIncludeMargin}
@@ -97,6 +98,7 @@ export default function App() {
         />
       </div>
       <div>
+        <button onClick={handleDownload}>Download</button>
         <button onClick={handleReset}>Reset</button>
       </div>
     </>
