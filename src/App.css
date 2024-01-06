@@ -6,20 +6,18 @@
 }
 
 textarea {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  font-size: 12pt;
   width: 100%;
 }
 
 .dropdown-container {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-top: 5px;
   margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .dropdown-desc {

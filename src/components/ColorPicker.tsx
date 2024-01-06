@@ -13,6 +13,7 @@ export default function ColorPicker(props: ColorPickerProps) {
       {desc ? <div className="color-desc">{desc}</div> : null}
       <input
         type="color"
+        className="color"
         value={color}
         onChange={(event) => onChange(event.target.value)}
       />

@@ -11,3 +11,7 @@
 .color-desc {
   margin-right: 5px;
 }
+
+.color {
+  cursor: pointer;
+}
