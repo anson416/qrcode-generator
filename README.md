@@ -1,3 +1,3 @@
 # QR Code Generator
 
-Visit [https://qrcode-generator-34645d.netlify.app](https://qrcode-generator-34645d.netlify.app) to try the QR Code Generator.
+Visit [my GitHub Pages](https://anson416.github.io/qrcode-generator/) to try this QR Code Generator.
