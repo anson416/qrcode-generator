@@ -8,17 +8,17 @@
 }
 
 .switch-on {
-  background-color: #5cb85c;
+  background-color: var(--switch-on-color);
 }
 
 .switch-off {
-  background-color: #d9534f;
+  background-color: var(--switch-off-color);
 }
 
 .switch-handle {
   width: 18px;
   height: 18px;
-  background-color: #ffffff;
+  background-color: var(--switch-handle-color);
   border-radius: 50%;
   position: absolute;
   top: 1px;
@@ -37,13 +37,12 @@
 .switch-container {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
-.switch-desc {
+.switch-prefix {
   margin-right: 5px;
+}
+
+.switch-suffix {
+  margin-left: 5px;
 }

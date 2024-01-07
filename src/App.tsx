@@ -54,8 +54,13 @@ export default function App() {
   return (
     <>
       <div className="app" data-theme={isDark ? "dark" : "light"}>
-        <div>
-          <Switch isChecked={isDark} setAction={setIsDark} />
+        <div className="box dark-switch">
+          <Switch
+            isChecked={isDark}
+            setAction={setIsDark}
+            prefix="Light"
+            suffix="Dark"
+          />
         </div>
         <h1 className="title">QR Code Generator</h1>
         <div ref={qrCodeRef}>
@@ -70,6 +75,7 @@ export default function App() {
         </div>
         <div>
           <textarea
+            className="box"
             autoFocus
             value={text}
             placeholder="Type something here"
@@ -105,10 +111,10 @@ export default function App() {
           <Switch
             isChecked={includeMargin}
             setAction={setIncludeMargin}
-            desc="Margin"
+            prefix="Margin"
           />
         </div>
-        <div>
+        <div className="box">
           <button onClick={handleDownload}>Download</button>
           <button onClick={handleReset}>Reset</button>
         </div>

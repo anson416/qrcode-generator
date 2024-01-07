@@ -3,14 +3,15 @@ import "./Switch.css";
 interface SwitchProps {
   isChecked: boolean;
   setAction: (isChecked: boolean) => void;
-  desc?: string;
+  prefix?: string;
+  suffix?: string;
 }
 
 export default function Switch(props: SwitchProps) {
-  const { isChecked, setAction, desc } = props;
+  const { isChecked, setAction, prefix, suffix } = props;
   return (
     <div className="switch-container">
-      {desc ? <div className="switch-desc">{desc}</div> : null}
+      {prefix ? <label className="switch-prefix">{prefix}</label> : null}
       <div
         className={`switch ${isChecked ? "switch-on" : "switch-off"}`}
         onClick={() => setAction(!isChecked)}
@@ -21,6 +22,7 @@ export default function Switch(props: SwitchProps) {
           }`}
         />
       </div>
+      {suffix ? <label className="switch-suffix">{suffix}</label> : null}
     </div>
   );
 }
