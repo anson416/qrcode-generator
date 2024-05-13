@@ -78,4 +78,5 @@ textarea {
 
 select {
   background-color: var(--select-bg-color);
+  box-shadow: none;
 }
