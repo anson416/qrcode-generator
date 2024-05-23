@@ -14,3 +14,11 @@
 .color {
   cursor: pointer;
 }
+
+.color::-webkit-color-swatch {
+    border: none;
+}
+
+.color::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
