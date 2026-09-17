@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import Switch from "./components/Switch";
 import ColorPicker from "./components/ColorPicker";
-import useLocalStorage from "use-local-storage";
+import useLocalStorage from "./hooks/useLocalStorage";
 import "./App.css";
 
 export default function App() {
@@ -104,7 +104,9 @@ export default function App() {
               onChange={(event) => setLevel(event.target.value)}
             >
               {errorCorrectionLevels.map((item) => (
-                <option value={item[0]}>{item}</option>
+                <option key={item} value={item[0]}>
+                  {item}
+                </option>
               ))}
             </select>
           </div>
